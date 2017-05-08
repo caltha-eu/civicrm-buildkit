@@ -35,6 +35,7 @@ function civibuild_alias_resolve() {
     d7-45)       SITE_TYPE=drupal-clean     ; CIVI_VERSION=4.5       ; CMS_TITLE="CiviCRM 4.5 Demo on Drupal 7"      ;;
     d7-46)       SITE_TYPE=drupal-clean     ; CIVI_VERSION=4.6       ; CMS_TITLE="CiviCRM 4.6 Demo on Drupal 7"      ;;
     d7-47)       SITE_TYPE=drupal-clean     ; CIVI_VERSION=master    ; CMS_TITLE="CiviCRM 4.7 Demo on Drupal 7"      ;;
+    d7c-47)	 SITE_TYPE=drupal-caltha    ; CIVI_VERSION=4.7	     ; CMS_TITLE="CiviCRM 4.7 Caltha Dev Sandbox on Drupal 7" 	;;
     d7-master)   SITE_TYPE=drupal-clean     ; CIVI_VERSION=master    ; CMS_TITLE="CiviCRM Sandbox on Drupal 7"       ;;
 
 #   d6-46)       SITE_TYPE=drupal6-demo     ; CIVI_VERSION=4.6       ; CMS_TITLE="CiviCRM 4.6 Demo on Drupal 6"      ; VOL_VERSION=v4.5-1.4.0   ; DISC_VERSION=master   ; RULES_VERSION=master   ;;
