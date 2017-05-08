@@ -1,0 +1,35 @@
+; Call using:
+; drush make --working-copy civicrm.make
+
+; drush make API version
+api = 2
+
+; Drupal core
+core = %%CMS_VERSION%%
+
+; ****************************************
+; Drupal core
+; ****************************************
+
+projects[] = drupal
+
+; ****************************************
+; Runtime Modules
+; ****************************************
+
+projects[libraries][subdir] = contrib
+projects[views][subdir] = contrib
+projects[entity][subdir] = contrib
+projects[civicrm_entity][subdir] = contrib
+projects[l10n_update][subdir] = contrib
+projects[civi_bartik][subdir] = contrib
+projects[webform][subdir] = contrib
+projects[webform_civicrm][subdir] = contrib
+projects[l10n_update][subdir] = contrib
+
+; ****************************************
+; Developer modules
+; ****************************************
+
+projects[devel][subdir] = contrib
+projects[devel][version] = 1.3
