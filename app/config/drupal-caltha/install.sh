@@ -37,12 +37,12 @@ civicrm_install
 pushd "${WEB_ROOT}/sites/${DRUPAL_SITE_DIR}" >> /dev/null
 
   drush -y updatedb
-  drush -y en civicrm toolbar locale garland
+  drush -y en civicrm toolbar locale civi_bartik civicrm_developer
   ## disable annoying/unneeded modules
   drush -y dis overlay
 
   ## Setup theme
-  #above# drush -y en garland
+  #above# drush -y en civi_bartik
   export SITE_CONFIG_DIR
   drush -y -u "$ADMIN_USER" scr "$SITE_CONFIG_DIR/install-theme.php"
 
@@ -54,7 +54,7 @@ pushd "${WEB_ROOT}/sites/${DRUPAL_SITE_DIR}" >> /dev/null
   drush -y en civicrm_webtest
   drush -y user-create --password="$DEMO_PASS" --mail="$DEMO_EMAIL" "$DEMO_USER"
   drush -y user-add-role civicrm_webtest_user "$DEMO_USER"
-  # In Garland, CiviCRM's toolbar looks messy unless you also activate Drupal's "toolbar", so grant "access toolbar"
+  # In Garland, CiviCRM's    toolbar looks messy unless you also activate Drupal's "toolbar", so grant "access toolbar"
   # We've activated more components than typical web-test baseline, so grant rights to those components.
   for perm in 'access toolbar'
   do
