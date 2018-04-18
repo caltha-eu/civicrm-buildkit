@@ -18,16 +18,16 @@ PRJDIR=$(dirname "$BINDIR")
 TMPDIR="$PRJDIR/app/tmp"
 LOCKFILE="$TMPDIR/civi-download-tools.lock"
 LOCKTIMEOUT=90
-CIVIXURL="https://download.civicrm.org/civix/civix.phar-2017-04-22-48231d84"
-CVURL="https://download.civicrm.org/cv/cv.phar-2017-04-19-e45110e9"
-HUB_VERSION="2.2.3"
+CIVIXURL="https://download.civicrm.org/civix/civix.phar-2017-08-02-2489efea"
+CVURL="https://download.civicrm.org/cv/cv.phar-2017-07-27-89ba2508"
+HUB_VERSION="2.2.9"
 DRUSH8URL=http://files.drush.org/drush.phar
 PHPUNITURL=https://phar.phpunit.de/phpunit-4.8.21.phar
 WPCLIURL=https://github.com/wp-cli/wp-cli/releases/download/v1.1.0/wp-cli-1.1.0.phar
-GITSCANURL="https://download.civicrm.org/git-scan/git-scan.phar-2017-04-19-b93a82b6"
-AMPURL="https://download.civicrm.org/amp/amp.phar-2017-05-05-073fc5b2"
+GITSCANURL="https://download.civicrm.org/git-scan/git-scan.phar-2017-06-28-101620c7"
+AMPURL="https://download.civicrm.org/amp/amp.phar-2017-08-08-d9304ee6"
 CIVISTRINGSURL="https://download.civicrm.org/civistrings/civistrings.phar-2017-04-19-df547ff9"
-JOOMLAURL="https://download.civicrm.org/joomlatools-console/joomla.phar-2016-07-15-d2b7d23a"
+JOOMLAURL="https://download.civicrm.org/joomlatools-console/joomla.phar-2017-06-19-62ff6a9df"
 IS_QUIET=
 IS_FORCE=
 IS_FULL=
@@ -289,7 +289,7 @@ function get_system_installer() {
     source /etc/lsb-release
   fi
   case "$DISTRIB_CODENAME" in
-    precise|trusty|jessie|xenial|yakkety)
+    precise|trusty|jessie|xenial|yakkety|zesty)
       echo "do_system_$DISTRIB_CODENAME"
       ;;
     *)
@@ -341,10 +341,12 @@ function do_system_trusty() {
 }
 
 ###############################################################################
+## If this shared function doesn't work, don't add conditionals - copy/paste into a new function.
 function do_system_xenial() {
   set -e
     PACKAGES="acl git wget unzip zip mysql-server mysql-client php7.0-cli php7.0-imap php7.0-ldap php7.0-curl php7.0-mysql php7.0-intl php7.0-gd php7.0-mcrypt php7.0-bcmath php7.0-mbstring php7.0-soap php7.0-zip php7.0-xml apache2 libapache2-mod-php7.0 nodejs-legacy npm"
-    echo "Detected \"Ubuntu Xenial 16.04\"."
+    UBUNTU_VERSION=$(lsb_release -ds)
+    echo "Detected $UBUNTU_VERSION."
     echo ""
     echo "Task: $PACKAGES"
     echo ""
@@ -369,31 +371,13 @@ function do_system_xenial() {
 
 ###############################################################################
 function do_system_yakkety() {
-  set -e
-    PACKAGES="acl git wget unzip zip mysql-server mysql-client php7.0-cli php7.0-imap php7.0-ldap php7.0-curl php7.0-mysql php7.0-intl php7.0-gd php7.0-mcrypt php7.0-bcmath php7.0-mbstring php7.0-soap php7.0-zip php7.0-xml apache2 libapache2-mod-php7.0 nodejs-legacy npm"
-    echo "Detected \"Ubuntu Yakkety 16.10\"."
-    echo ""
-    echo "Task: $PACKAGES"
-    echo ""
-    echo "Warning: This system will not support php-mysql extension"
-    echo ""
-    if cvutil_confirm "Run automated installation? [Y/n] " y y; then
-      sudo apt-get update
-      sudo apt-get -y install $PACKAGES
-      sudo phpenmod bcmath
-      sudo phpenmod curl
-      sudo phpenmod imap
-      sudo phpenmod mcrypt
-      sudo phpenmod xml
-      sudo a2enmod rewrite
-      sudo apache2ctl restart
-    else
-      echo "Aborted" 1>&2
-      exit 1
-    fi
-  set +e
+  do_system_xenial
 }
 
+###############################################################################
+function do_system_zesty() {
+  do_system_xenial
+}
 ###############################################################################
 function do_system_jessie() {
   set -e

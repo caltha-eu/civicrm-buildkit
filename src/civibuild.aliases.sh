@@ -51,6 +51,9 @@ function civibuild_alias_resolve() {
     dc47)        SITE_TYPE=drupal-clean     ; CIVI_VERSION=master    ; CMS_TITLE="CiviCRM 4.7 Clean on Drupal"       ;;
     dcmaster)    SITE_TYPE=drupal-clean     ; CIVI_VERSION=master    ; CMS_TITLE="CiviCRM Clean Sandbox on Drupal"   ;;
 
+    dcase)       SITE_TYPE=drupal-case      ; CIVI_VERSION=master    ; CMS_TITLE="CiviCase Sandbox on Drupal"        ;;
+    wpcase)      SITE_TYPE=wp-case          ; CIVI_VERSION=master    ; CMS_TITLE="CiviCase Sandbox on WordPress"     ;;
+
     wp43)        SITE_TYPE=wp-demo          ; CIVI_VERSION=4.3       ; CMS_TITLE="CiviCRM 4.3 Demo on WordPress"     ;;
     wp44)        SITE_TYPE=wp-demo          ; CIVI_VERSION=4.4       ; CMS_TITLE="CiviCRM 4.4 Demo on WordPress"     ; VOL_VERSION=4.4-1.x    ;;
     wp45)        SITE_TYPE=wp-demo          ; CIVI_VERSION=4.5       ; CMS_TITLE="CiviCRM 4.5 Demo on WordPress"     ; VOL_VERSION=v4.5-1.4.0 ;;
@@ -74,9 +77,9 @@ function civibuild_alias_resolve() {
 
     hr13)        SITE_TYPE=hrdemo           ; CIVI_VERSION=4.5       ; CMS_TITLE="CiviHR 1.3 Demo"                   ; HR_VERSION=1.3        ;;
     hr14)        SITE_TYPE=hrdemo           ; CIVI_VERSION=4.5       ; CMS_TITLE="CiviHR 1.4 Demo"                   ; HR_VERSION=1.4        ;;
-    hr15)        SITE_TYPE=hr15             ; CIVI_VERSION=4.5       ; CMS_TITLE="CiviHR 1.5 Demo"                   ; HR_VERSION=1.5     ;;
-    hr16)        SITE_TYPE=hr16             ; CIVI_VERSION=4.7.9     ; CMS_TITLE="CiviHR 1.6 Demo"                   ; HR_VERSION=master    ;
-NO_SAMPLE_DATA=1       ;;
+    hr15)        SITE_TYPE=hr15             ; CIVI_VERSION=4.5       ; CMS_TITLE="CiviHR 1.5 Demo"                   ; HR_VERSION=1.5        ;;
+    hr16)        SITE_TYPE=hr16             ; CIVI_VERSION=4.7.9     ; CMS_TITLE="CiviHR 1.6 Demo"                   ; HR_VERSION=master     ; NO_SAMPLE_DATA=1       ;;
+    hr17)        SITE_TYPE=hr17             ; CIVI_VERSION=4.7.18    ; CMS_TITLE="CiviHR 1.7 Demo"                   ; HR_VERSION=master     ; NO_SAMPLE_DATA=1       ;;
     hrmaster)    SITE_TYPE=hr15             ; CIVI_VERSION=master    ; CMS_TITLE="CiviHR Sandbox"                    ; HR_VERSION=master     ;;
 
     bempty)      SITE_TYPE=backdrop-empty   ; CIVI_VERSION=none      ; CMS_TITLE="Backdrop Sandbox"                  ;;
