@@ -41,6 +41,8 @@ pushd "${WEB_ROOT}/sites/${DRUPAL_SITE_DIR}" >> /dev/null
   ## disable annoying/unneeded modules
   drush -y dis overlay
 
+  cv ev 'if(is_callable(array("CRM_Core_BAO_CMSUser","synchronize"))){CRM_Core_BAO_CMSUser::synchronize(FALSE);}else{CRM_Utils_System::synchronizeUsers();}'
+
   ## Setup theme
   #above# drush -y en garland
   export SITE_CONFIG_DIR

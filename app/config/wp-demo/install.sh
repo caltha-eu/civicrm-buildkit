@@ -53,8 +53,12 @@ wp eval '$home = get_page_by_title("Welcome to CiviCRM with WordPress"); update_
 
 wp plugin activate civicrm
 wp plugin activate civicrm-demo-wp
+wp plugin install civicrm-admin-utilities
+wp plugin install gutenberg
+wp plugin install gutenberg-ramp --activate
 
 civicrm_apply_demo_defaults
+cv ev 'if(is_callable(array("CRM_Core_BAO_CMSUser","synchronize"))){CRM_Core_BAO_CMSUser::synchronize(FALSE);}else{CRM_Utils_System::synchronizeUsers();}'
 
 wp role create civicrm_admin 'CiviCRM Administrator'
 wp cap add civicrm_admin \
@@ -142,9 +146,7 @@ wp cap add civicrm_admin \
 
 wp user create "$DEMO_USER" "$DEMO_EMAIL" --role=civicrm_admin --user_pass="$DEMO_PASS"
 
-wp civicrm api extension.install key=org.civicrm.angularprofiles debug=1
-
-wp civicrm api extension.install key=org.civicrm.volunteer debug=1
+cv en angularprofiles volunteer
 
 wp cap add civicrm_admin \
   register to volunteer \
@@ -152,3 +154,7 @@ wp cap add civicrm_admin \
   create volunteer projects \
   edit own volunteer projects \
   delete own volunteer projects
+
+## Demo sites always disable email and often disable cron
+wp civicrm api StatusPreference.create ignore_severity=critical name=checkOutboundMail
+wp civicrm api StatusPreference.create ignore_severity=critical name=checkLastCron

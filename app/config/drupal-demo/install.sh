@@ -47,6 +47,7 @@ pushd "${WEB_ROOT}/sites/${DRUPAL_SITE_DIR}" >> /dev/null
     | drush cvapi setting.create --in=json
   ## Note: CiviGrant disabled by default. If you enable, update the permissions as well.
   civicrm_apply_demo_defaults
+  cv ev 'if(is_callable(array("CRM_Core_BAO_CMSUser","synchronize"))){CRM_Core_BAO_CMSUser::synchronize(FALSE);}else{CRM_Utils_System::synchronizeUsers();}'
 
   ## Setup theme
   #above# drush -y en garland
@@ -111,9 +112,11 @@ EOPERM
     add 'register to volunteer'
 EOPERM
 
-  drush -y -u "$ADMIN_USER" cvapi extension.install key=org.civicoop.civirules debug=1
-  drush -y -u "$ADMIN_USER" cvapi extension.install key=eu.tttp.civisualize debug=1
-  drush -y -u "$ADMIN_USER" cvapi extension.install key=org.civicrm.module.cividiscount debug=1
+  cv en civirules civisualize cividiscount
+
+  ## Demo sites always disable email and often disable cron
+  drush cvapi StatusPreference.create ignore_severity=critical name=checkOutboundMail
+  drush cvapi StatusPreference.create ignore_severity=critical name=checkLastCron
 
   ## Setup CiviCRM dashboards
   INSTALL_DASHBOARD_USERS="$ADMIN_USER;$DEMO_USER" drush scr "$SITE_CONFIG_DIR/install-dashboard.php"

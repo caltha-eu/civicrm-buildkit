@@ -24,6 +24,7 @@
 #git_cache_setup "https://github.com/civicrm/civicrm-wordpress.git"           "$CACHE_DIR/civicrm/civicrm-wordpress.git"
 #git_cache_setup "https://github.com/civicrm/civicrm-demo-wp.git"             "$CACHE_DIR/civicrm/civicrm-demo-wp.git"
 git_cache_setup "https://github.com/eileenmcnaughton/civicrm_developer.git"  "$CACHE_DIR/eileenmcnaughton/civicrm_developer.git"
+git_cache_setup "https://github.com/civicrm/api4.git"                        "$CACHE_DIR/civicrm/api4.git"
 
 git_cache_setup "https://github.com/caltha-eu/civicrm-core.git"                "$CACHE_DIR/caltha-eu/civicrm-core.git"
 git_cache_setup "https://github.com/caltha-eu/civicrm-drupal.git"              "$CACHE_DIR/caltha-eu/civicrm-drupal.git"
@@ -32,7 +33,7 @@ git_cache_setup "https://github.com/caltha-eu/civicrm-packages.git"            "
 #git_cache_setup "https://github.com/civicrm/civivolunteer.git" "$CACHE_DIR/civicrm/civivolunteer.git"
 git_cache_setup "https://github.com/ginkgostreet/org.civicrm.angularprofiles.git" "$CACHE_DIR/ginkgostreet/org.civicrm.angularprofiles.git"
 
-git_cache_setup "https://github.com/civicoop/org.civicoop.civirules.git" "$CACHE_DIR/civicrm/org.civicoop.civirules.git"
+git_cache_setup "https://lab.civicrm.org/extensions/civirules.git" "$CACHE_DIR/civicrm/org.civicoop.civirules.git"
 git_cache_setup "https://github.com/TechToThePeople/civisualize.git" "$CACHE_DIR/TechToThePeople/civisualize.git"
 #git_cache_setup "https://github.com/dlobo/org.civicrm.module.cividiscount.git" "$CACHE_DIR/dlobo/org.civicrm.module.cividiscount.git"
 

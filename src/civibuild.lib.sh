@@ -11,11 +11,16 @@
 ###############################################################################
 ## Assert that shell variables are defined. If not defined, exit with an error.
 ## usage: assertvars <context> <var1> <var2> <var3> ...
+## exmple: cvutil_assertvars civibuild_app_download WEB_ROOT PRJDIR CACHE_DIR SITE_NAME SITE_TYPE
 function cvutil_assertvars() {
   _cvutil_assertvars_back="$-"
 
+  # disable verbose output:
   set +x
+
+  # the calling function name:
   context="$1"
+
   shift
   while [ "$1" ]; do
     var="$1"
@@ -27,6 +32,7 @@ function cvutil_assertvars() {
     shift
   done
 
+  #restore previous bash options (revert set +x)
   set -${_cvutil_assertvars_back}
 }
 
@@ -84,15 +90,29 @@ function cvutil_export() {
 }
 
 ###############################################################################
+## Delete a file try, overriding any unwriteable file permissions
+function cvutil_rmrf() {
+  local folder="$1"
+  if [ -z "$folder" ]; then
+    return
+  fi
+  if [ ! -e "$folder" ]; then
+    return
+  fi
+  find "$folder" -type d -print0 | xargs -0 -n 20 chmod u+w
+  rm -rf "$folder"
+}
+
+###############################################################################
 ## Summarize the content of key environment variables
 ## usage: cvutil_summary <message> <var1> <var2> ...
 function cvutil_summary() {
+# Not asserting any vars because then we can't report that they are in fact empty.
   if [ -n "$1" ]; then
     echo $1
   fi
   shift
 
-  cvutil_assertvars cvutil_summary "$@"
   for var in "$@" ; do
     eval "val=\$$var"
     echo " - $var: $val"
@@ -134,7 +154,7 @@ function cvutil_mkurl() {
   local subsite_name="$1"
   cvutil_assertvars cvutil_mkurl URL_TEMPLATE
   if [ "%AUTO%" == "$URL_TEMPLATE" ]; then
-    echo "http://%subsite_name%.dev" | sed "s;%SITE_NAME%;$subsite_name;g"
+    echo "http://%subsite_name%.test" | sed "s;%SITE_NAME%;$subsite_name;g"
   else
     echo "$URL_TEMPLATE" | sed "s;%SITE_NAME%;$subsite_name;g"
   fi
@@ -541,6 +561,7 @@ function civicrm_apply_demo_defaults() {
       ));
 EOPHP
   fi
+  cv en --ignore-missing api4
 }
 
 ###############################################################################
@@ -702,6 +723,30 @@ class CiviSeleniumSettings {
 }
 EOF
   fi
+}
+
+###############################################################################
+## Determine the version# of the CiviCRM codebase
+## usage: civicrm_get_ver <path>
+## ex:    ver=$(civicrm_get_ver .)
+## ex:    ver=$(civicrm_get_ver /var/www/sites/all/modules/civicrm)
+function civicrm_get_ver() {
+  pushd "$1" >> /dev/null
+    if [ -f xml/version.xml ]; then
+      ## Works in any git-based build, even if gencode hasn't run yet.
+      php -r 'echo simplexml_load_file("xml/version.xml")->version_no;'
+    else
+      ## works in any tar-based build.
+      php -r 'require "civicrm-version.php"; $a = civicrmVersion(); echo $a["version"];'
+    fi
+  popd >> /dev/null
+}
+
+###############################################################################
+## usage: civicrm_ext_download_bare <key> <path>
+function civicrm_ext_download_bare() {
+  local civiVer=$(civicrm_get_ver .)
+  cv dl -b "@https://civicrm.org/extdir/ver=$civiVer|cms=Drupal/$1.xml" --to="$2"
 }
 
 ###############################################################################
@@ -1066,6 +1111,7 @@ function joomla_install() {
     --overwrite \
     --skip-exists-check \
     "$child"
+  amp datadir "$CMS_ROOT/logs" "$CMS_ROOT/tmp"
 }
 
 ###############################################################################
